@@ -2,12 +2,18 @@ import * as React from "react"
 import {
   ChakraProvider,
   Box,
+  Button,
+  Table,
+  Tbody,
+  Td,
   Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
+  Th,
+  Thead,
+  Tr,
+  useColorModeValue as mode,
   theme,
+  Heading,
+  Divider,
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { Logo } from "./Logo"
@@ -15,24 +21,37 @@ import { Logo } from "./Logo"
 export const App = () => (
   <ChakraProvider theme={theme}>
     <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Logo h="40vmin" pointerEvents="none" />
-          <Text>
-            Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-          </Text>
-          <Link
-            color="teal.500"
-            href="https://chakra-ui.com"
-            fontSize="2xl"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn Chakra
-          </Link>
-        </VStack>
-      </Grid>
-    </Box>
+    <Heading pt='5px'>Job Listing app</Heading>
+    <Table my="8" borderWidth="1px" fontSize="sm">
+      <Thead bg={mode('gray.50', 'gray.800')}>
+      <Tr>
+      <Th>Name</Th>
+      <Th>Description</Th>
+      <Th >Start Date</Th>
+    </Tr>
+      </Thead>
+      <Tbody>
+        <Tr>
+          <Td>Arya Stark</Td>
+          <Td>Killer of the Night King</Td>
+          <Td >5/21/2021</Td>
+        </Tr>
+        <Tr>
+          <Td>Khal Drogo</Td>
+          <Td>Dothraki chief</Td>
+          <Td >6/1/2021</Td>
+        </Tr>
+      </Tbody>
+      {/* <Tbody>
+        {listings.map((listing: { id: any; name: any; description: any; date: any }) => (
+          <Tr key={listing.id}>
+            <Td>{listing.name}</Td>
+            <Td>{listing.description}</Td>
+            <Td>{listing.date}</Td>
+          </Tr>
+        ))}
+      </Tbody> */}
+      </Table>
+      </Box>
   </ChakraProvider>
 )
