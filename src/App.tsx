@@ -17,32 +17,38 @@ import {
 } from "@chakra-ui/react"
 import { ColorModeSwitcher } from "./ColorModeSwitcher"
 import { Logo } from "./Logo"
+import { useCallback, useEffect, useState } from "react"
+import { DataStore } from "aws-amplify"
+import { Listing } from "./models"
 
-export const App = () => (
+
+function App() {
+  const [listings, setListings] = useState<any | any> ([]);
+
+  async function getListings() {
+    const listings = await DataStore.query(Listing)
+    setListings(listings)
+  }
+
+  useEffect(() => { 
+    getListings()
+    const subscription = DataStore.observe(Listing).subscribe(() => getListings())
+    return () => subscription.unsubscribe()
+  })
+
+  return (
   <ChakraProvider theme={theme}>
     <Box textAlign="center" fontSize="xl">
-    <Heading pt='5px'>Job Listing app</Heading>
+    <Heading pt='5px'>My Amplify app</Heading>
     <Table my="8" borderWidth="1px" fontSize="sm">
       <Thead bg={mode('gray.50', 'gray.800')}>
       <Tr>
       <Th>Name</Th>
       <Th>Description</Th>
-      <Th >Start</Th>
+      <Th >Date</Th>
     </Tr>
       </Thead>
       <Tbody>
-        <Tr>
-          <Td>Arya Stark</Td>
-          <Td>Killer of the Night King</Td>
-          <Td >5/21/2021</Td>
-        </Tr>
-        <Tr>
-          <Td>Khal Drogo</Td>
-          <Td>Dothraki chief</Td>
-          <Td >6/1/2021</Td>
-        </Tr>
-      </Tbody>
-      {/* <Tbody>
         {listings.map((listing: { id: any; name: any; description: any; date: any }) => (
           <Tr key={listing.id}>
             <Td>{listing.name}</Td>
@@ -50,8 +56,11 @@ export const App = () => (
             <Td>{listing.date}</Td>
           </Tr>
         ))}
-      </Tbody> */}
+      </Tbody>
       </Table>
       </Box>
   </ChakraProvider>
-)
+  )
+}
+
+export default App;
