@@ -27,7 +27,7 @@ export const App = () => (
       <Tr>
       <Th>Name</Th>
       <Th>Description</Th>
-      <Th >Start Date</Th>
+      <Th >Start</Th>
     </Tr>
       </Thead>
       <Tbody>
